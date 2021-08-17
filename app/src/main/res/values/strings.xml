@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Crew Details</string>
+    <string name="todo">TODO</string>
+    <string name="status">Status</string>
+    <string name="wikipedia_link">Wikipedia link</string>
+    <string name="agency">Agency</string>
+    <string name="crew_name">Crew name</string>
+    <string name="refresh">Refresh</string>
+    <string name="delete">Delete</string>
+</resources>
