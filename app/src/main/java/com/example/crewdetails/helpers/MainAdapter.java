@@ -1,4 +1,4 @@
-package com.example.crewdetails;
+package com.example.crewdetails.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.crewdetails.database.MainData;
+import com.example.crewdetails.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,12 +20,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
+    private onItemClickListener listener;
     private final List<MainData> dataList;
     private final Activity context;
 
-    public MainAdapter(Activity context, List<MainData> dataList) {
+    CrewCallback callback;
+
+    public MainAdapter(Activity context, List<MainData> dataList, CrewCallback callback) {
         this.context = context;
         this.dataList = dataList;
+        this.callback = callback;
         notifyDataSetChanged();
     }
 
@@ -76,7 +82,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return dataList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView cName, cStatus, cAgency, wikipediaLink;
         ImageView ivCrew;
@@ -90,7 +96,25 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             wikipediaLink = itemView.findViewById(R.id.tvWiki);
             ivCrew = itemView.findViewById(R.id.crewImage);
 
+            itemView.setOnClickListener(v -> {
+                callback.onItemClick(getAdapterPosition(),
+                        cName,
+                        cAgency,
+                        wikipediaLink,
+                        cStatus);
+            });
+
         }
     }
+
+    public interface onItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
 }
 

@@ -18,6 +18,7 @@
             android:id="@+id/crewImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:transitionName="profile_transition"
             android:contentDescription="@string/todo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,6 +46,8 @@
                 android:id="@+id/tvAgency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#6D6D6D"
+                android:textColorHint="#6D6D6D"
                 android:hint="@string/agency" />
 
             <TextView
@@ -63,6 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:textColorHint="#6D6D6D"
+            android:textColor="#6D6D6D"
             android:hint="@string/status"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

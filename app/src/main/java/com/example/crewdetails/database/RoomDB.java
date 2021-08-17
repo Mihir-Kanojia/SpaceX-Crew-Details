@@ -1,4 +1,4 @@
-package com.example.crewdetails;
+package com.example.crewdetails.database;
 
 
 import android.content.Context;

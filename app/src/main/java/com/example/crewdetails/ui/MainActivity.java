@@ -1,23 +1,29 @@
-package com.example.crewdetails;
+package com.example.crewdetails.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.crewdetails.helpers.CrewCallback;
+import com.example.crewdetails.helpers.MainAdapter;
+import com.example.crewdetails.database.MainData;
+import com.example.crewdetails.R;
+import com.example.crewdetails.database.RoomDB;
 import com.google.android.material.button.MaterialButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +32,7 @@ import java.util.List;
 
 public class
 
-MainActivity extends AppCompatActivity {
+MainActivity extends AppCompatActivity implements CrewCallback {
 
 
     List<MainData> dataList = new ArrayList<>();
@@ -49,10 +55,17 @@ MainActivity extends AppCompatActivity {
         database = RoomDB.getInstance(this);
         dataList = database.mainDao().getAll();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvCrewDetails.setLayoutManager(linearLayoutManager);
-        adapter = new MainAdapter(MainActivity.this, dataList);
+        rvCrewDetails.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MainAdapter(MainActivity.this, dataList, this);
         rvCrewDetails.setAdapter(adapter);
+
+//        adapter.setOnItemClickListener(new MainAdapter.onItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//
+//
+//            }
+//        });
 
         //Add data
         refreshBtn.setOnClickListener(v -> {
@@ -92,7 +105,7 @@ MainActivity extends AppCompatActivity {
                 }
 
             }, error -> {
-                Log.d("mihir", "Something went wrong: "+error);
+                Log.d("mihir", "Something went wrong: " + error);
             });
 
 
@@ -118,6 +131,30 @@ MainActivity extends AppCompatActivity {
             dataList.addAll(database.mainDao().getAll());
             adapter.notifyDataSetChanged();
         });
+
+
+    }
+
+    @Override
+    public void onItemClick(int pos,
+                            TextView name,
+                            TextView agency,
+                            TextView wiki,
+                            TextView status) {
+
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("bookObject", dataList.get(pos));
+
+        //Shared Anim
+        Pair<View, String> pair2 = Pair.create((View) name, "name_transition");
+        Pair<View, String> pair3 = Pair.create((View) agency, "agency_transition");
+        Pair<View, String> pair4 = Pair.create((View) wiki, "wiki_transition");
+        Pair<View, String> pair5 = Pair.create((View) status, "status_transition");
+
+        ActivityOptionsCompat optionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair2, pair3, pair4, pair5);
+
+        startActivity(intent, optionsCompat.toBundle());
 
 
     }
