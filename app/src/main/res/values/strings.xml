@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crew Details</string>
+    <string name="app_name">SpaceX Crew</string>
     <string name="todo">TODO</string>
     <string name="status">Status</string>
     <string name="wikipedia_link">Wikipedia link</string>
